@@ -120,11 +120,11 @@ fun SignUpScreenPortrait(isDarkMode: Boolean) {
                 ) {
                     SocialButton(
                         icon = ImageVector.vectorResource(id = R.drawable.ic_apple),
-                        onClick = { }
+                        onClick = { }, colors = colors
                     )
                     SocialButton(
                         icon = ImageVector.vectorResource(id = R.drawable.ic_google),
-                        onClick = { }
+                        onClick = { }, colors = colors
                     )
                 }
 
@@ -167,9 +167,11 @@ fun SignUpScreenPortrait(isDarkMode: Boolean) {
 
                 AlreadyHaveAccountText(colors = colors)
 
-                Spacer(modifier = Modifier
-                    .height(32.dp)
-                    .align(Alignment.CenterHorizontally))
+                Spacer(
+                    modifier = Modifier
+                        .height(32.dp)
+                        .align(Alignment.CenterHorizontally)
+                )
 
                 TermsAndPrivacyText(colors = colors)
 
@@ -246,11 +248,12 @@ fun SignUpScreenLandscape(isDarkMode: Boolean) {
                     ) {
                         SocialButton(
                             icon = ImageVector.vectorResource(id = R.drawable.ic_apple),
-                            onClick = { }
+                            onClick = { }, colors = colors
                         )
                         SocialButton(
+
                             icon = ImageVector.vectorResource(id = R.drawable.ic_google),
-                            onClick = { }
+                            onClick = { }, colors = colors
                         )
                     }
 
@@ -377,13 +380,17 @@ fun InputFieldsSection(
 @Composable
 fun SocialButton(
     icon: ImageVector? = null,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    colors: MyColors
 ) {
+    val isDark = isSystemInDarkTheme()
+    val iconTint = if (isDark) Color.White else Color.Unspecified
+    val backgroundColor = if (isDark) colors.containerColor else Color.White
     Box(
         modifier = Modifier
             .size(60.dp)
-            .background(Color.White, CircleShape)
-            .border(1.dp, Color.White, CircleShape)
+            .background(backgroundColor, CircleShape)
+            .border(1.dp, backgroundColor, CircleShape)
             .clickable { onClick() },
         contentAlignment = Alignment.Center
     ) {
@@ -392,7 +399,7 @@ fun SocialButton(
                 imageVector = icon,
                 contentDescription = null,
                 modifier = Modifier.size(24.dp),
-                tint = Color.Unspecified
+                tint = iconTint
             )
         }
     }
